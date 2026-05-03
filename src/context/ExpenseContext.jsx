@@ -25,6 +25,12 @@ export const ExpenseProvider = ({ children }) => {
     setExpenses(expenses.filter(e => e.id !== id));
   };
 
+  const updateExpense = (id, updatedData) => {
+    setExpenses(expenses.map(e =>
+      e.id === id ? { ...e, ...updatedData } : e
+    ));
+  };
+
   const toggleLike = (id) => {
     setExpenses(expenses.map(e =>
       e.id === id ? { ...e, liked: !e.liked } : e
@@ -32,7 +38,7 @@ export const ExpenseProvider = ({ children }) => {
   };
 
   return (
-    <ExpenseContext.Provider value={{ expenses, addExpense, removeExpense, toggleLike }}>
+    <ExpenseContext.Provider value={{ expenses, addExpense, removeExpense, updateExpense, toggleLike }}>
       {children}
     </ExpenseContext.Provider>
   );
