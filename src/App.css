@@ -76,6 +76,12 @@ body {
   width: 100%;
 }
 
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 @media (max-width: 768px) {
   .app-header {
     padding: 1.5rem;
@@ -91,5 +97,9 @@ body {
     grid-template-columns: 1fr;
     padding: 1rem;
     gap: 1.5rem;
+  }
+
+  .left-column {
+    order: 2;
   }
 }

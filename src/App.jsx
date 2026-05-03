@@ -3,6 +3,7 @@ import './App.css';
 import ExpenseList from './components/ExpenseList';
 import ExpenseForm from './components/ExpenseForm';
 import ThemeToggle from './components/ThemeToggle';
+import StatisticsPanel from './components/StatisticsPanel';
 import { ThemeProvider } from './context/ThemeContext';
 import { ExpenseProvider } from './context/ExpenseContext';
 
@@ -16,7 +17,10 @@ function App() {
             <ThemeToggle />
           </header>
           <main className="app-main">
-            <ExpenseForm />
+            <div className="left-column">
+              <ExpenseForm />
+              <StatisticsPanel />
+            </div>
             <ExpenseList />
           </main>
         </div>
