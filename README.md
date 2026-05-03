@@ -105,6 +105,23 @@ npm run build
 npm run preview
 ```
 
+## 🌐 Deployment
+
+The app is configured for easy deployment to GitHub Pages.
+
+### Quick Deploy
+
+```bash
+npm run deploy
+```
+
+This will:
+1. Build the production version
+2. Push to the `gh-pages` branch
+3. App will be live at: **https://MihaiM1209.github.io/tum-web-lab6/**
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)
+
 ## 📁 Project Structure
 
 ```
