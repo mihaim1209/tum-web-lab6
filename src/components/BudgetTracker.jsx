@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useExpenses } from '../context/ExpenseContext';
-import './BudgetTracker.css';
+
 
 export default function BudgetTracker() {
   const { expenses } = useExpenses();

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useExpenses } from '../context/ExpenseContext';
 import ExpenseItem from './ExpenseItem';
-import './ExpenseList.css';
+
 
 export default function ExpenseList() {
   const { expenses } = useExpenses();

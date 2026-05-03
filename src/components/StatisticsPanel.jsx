@@ -1,6 +1,6 @@
 import { useExpenses } from '../context/ExpenseContext';
 import BudgetTracker from './BudgetTracker';
-import './StatisticsPanel.css';
+
 
 const categoryEmojis = {
   food: '🍔',

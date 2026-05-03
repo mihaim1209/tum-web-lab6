@@ -1,58 +1,57 @@
 import { useState } from 'react';
 import { useExpenses } from '../context/ExpenseContext';
 import ExpenseEditModal from './ExpenseEditModal';
-import './ExpenseItem.css';
 
-const categoryEmojis = {
-  food: '🍔',
-  transport: '🚗',
-  entertainment: '🎬',
-  utilities: '💡',
-  shopping: '🛍️',
-  health: '🏥',
-  other: '📌',
+const categoryNames = {
+  food: 'Food',
+  transport: 'Transport',
+  entertainment: 'Entertainment',
+  utilities: 'Utilities',
+  shopping: 'Shopping',
+  health: 'Health',
+  other: 'Other',
 };
 
 export default function ExpenseItem({ expense }) {
   const { removeExpense, toggleLike } = useExpenses();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const emoji = categoryEmojis[expense.category] || '💰';
+  const categoryName = categoryNames[expense.category] || 'Other';
 
   return (
     <>
-      <div className={`expense-item ${expense.liked ? 'liked' : ''}`}>
-        <div className="expense-content">
-          <div className="expense-header">
-            <span className="category-emoji">{emoji}</span>
+      <div className="expense-row">
+        <div className="expense-main">
+          <div className="expense-title-line">
             <h4 className="expense-title">{expense.title}</h4>
-          </div>
-          <div className="expense-details">
-            <span className="expense-date">{new Date(expense.date).toLocaleDateString()}</span>
             <span className="expense-amount">${expense.amount.toFixed(2)}</span>
+          </div>
+          <div className="expense-meta">
+            <span className="pill">{categoryName}</span>
+            <span>{new Date(expense.date).toLocaleDateString()}</span>
           </div>
         </div>
         
         <div className="expense-actions">
           <button 
-            className="btn-edit"
+            className="btn-icon"
             onClick={() => setIsEditModalOpen(true)}
             title="Edit"
           >
-            ✏️
+            ✎
           </button>
           <button 
-            className={`btn-like ${expense.liked ? 'active' : ''}`}
+            className={`btn-icon ${expense.liked ? 'is-on' : ''}`}
             onClick={() => toggleLike(expense.id)}
             title={expense.liked ? "Unlike" : "Like"}
           >
-            {expense.liked ? '❤️' : '🤍'}
+            ★
           </button>
           <button 
-            className="btn-delete"
+            className="btn-icon btn-danger"
             onClick={() => removeExpense(expense.id)}
             title="Delete"
           >
-            🗑️
+            ×
           </button>
         </div>
       </div>

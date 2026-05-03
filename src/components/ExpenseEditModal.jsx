@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useExpenses } from '../context/ExpenseContext';
-import './ExpenseEditModal.css';
+
 
 export default function ExpenseEditModal({ expense, onClose }) {
   const { updateExpense } = useExpenses();
