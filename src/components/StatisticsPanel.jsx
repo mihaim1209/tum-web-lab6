@@ -1,4 +1,5 @@
 import { useExpenses } from '../context/ExpenseContext';
+import BudgetTracker from './BudgetTracker';
 import './StatisticsPanel.css';
 
 const categoryEmojis = {
@@ -133,6 +134,8 @@ export default function StatisticsPanel() {
           </div>
         </div>
       )}
+
+      <BudgetTracker />
     </div>
   );
 }
