@@ -1,17 +1,6 @@
 import { useExpenses } from '../context/ExpenseContext';
 import BudgetTracker from './BudgetTracker';
 
-
-const categoryEmojis = {
-  food: '🍔',
-  transport: '🚗',
-  entertainment: '🎬',
-  utilities: '💡',
-  shopping: '🛍️',
-  health: '🏥',
-  other: '📌',
-};
-
 const categoryNames = {
   food: 'Food',
   transport: 'Transport',
@@ -73,69 +62,72 @@ export default function StatisticsPanel() {
   const recentMonths = sortedMonths.slice(-3);
 
   return (
-    <div className="statistics-panel">
-      <h2>📊 Statistics</h2>
-
-      <div className="stat-grid">
-        <div className="stat-card">
-          <div className="stat-label">Total Spent</div>
-          <div className="stat-value">${totalAmount.toFixed(2)}</div>
+    <section className="statistics-panel">
+      <div className="summary-bar">
+        <div className="summary-card">
+          <span className="summary-label">Total spent</span>
+          <span className="summary-value">${totalAmount.toFixed(2)}</span>
+          <span className="summary-hint">all recorded expenses</span>
         </div>
-
-        <div className="stat-card">
-          <div className="stat-label">Average per expense</div>
-          <div className="stat-value">${averageExpense.toFixed(2)}</div>
+        <div className="summary-card">
+          <span className="summary-label">Average</span>
+          <span className="summary-value subtle">${averageExpense.toFixed(2)}</span>
+          <span className="summary-hint">per expense</span>
         </div>
-
-        <div className="stat-card">
-          <div className="stat-label">Total expenses</div>
-          <div className="stat-value">{expenses.length}</div>
+        <div className="summary-card">
+          <span className="summary-label">Count</span>
+          <span className="summary-value subtle">{expenses.length}</span>
+          <span className="summary-hint">tracked items</span>
         </div>
-
         {topCategory && (
-          <div className="stat-card highlight">
-            <div className="stat-label">Top spending</div>
-            <div className="stat-value">{categoryEmojis[topCategory]} {categoryNames[topCategory]}</div>
+          <div className="summary-card">
+            <span className="summary-label">Top category</span>
+            <span className="summary-value subtle">{categoryNames[topCategory]}</span>
+            <span className="summary-hint">${maxAmount.toFixed(2)} total</span>
           </div>
         )}
       </div>
 
-      <div className="category-breakdown">
-        <h3>By Category</h3>
-        <div className="category-items">
-          {Object.entries(categoryBreakdown).map(([category, data]) => (
-            <div key={category} className="category-item">
-              <div className="category-info">
-                <span className="category-label">{categoryEmojis[category]} {categoryNames[category]}</span>
-                <span className="category-count">{data.count}</span>
-              </div>
-              <div className="category-amount">${data.total.toFixed(2)}</div>
-              <div className="category-bar">
-                <div
-                  className="category-bar-fill"
-                  style={{ width: `${(data.total / totalAmount) * 100}%` }}
-                ></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {recentMonths.length > 0 && (
-        <div className="monthly-trend">
-          <h3>Recent Months</h3>
-          <div className="month-items">
-            {recentMonths.map(([month, amount]) => (
-              <div key={month} className="month-item">
-                <span className="month-label">{month}</span>
-                <span className="month-amount">${amount.toFixed(2)}</span>
+      <div className="two-col stats-grid">
+        <section className="card stat-section">
+          <h3 className="card-title">By category</h3>
+          <div className="category-list">
+            {Object.entries(categoryBreakdown).map(([category, data]) => (
+              <div key={category} className="category-row">
+                <div className="category-row-head">
+                  <span className="category-name">{categoryNames[category]}</span>
+                  <span className="category-count">{data.count}</span>
+                </div>
+                <div className="category-row-foot">
+                  <span className="category-amount">${data.total.toFixed(2)}</span>
+                  <div className="category-bar">
+                    <div
+                      className="category-bar-fill"
+                      style={{ width: `${(data.total / totalAmount) * 100}%` }}
+                    />
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-      )}
+        </section>
+
+        {recentMonths.length > 0 && (
+          <section className="card stat-section">
+            <h3 className="card-title">Recent months</h3>
+            <div className="month-list">
+              {recentMonths.map(([month, amount]) => (
+                <div key={month} className="month-row">
+                  <span className="month-label">{month}</span>
+                  <span className="month-amount">${amount.toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
 
       <BudgetTracker />
-    </div>
+    </section>
   );
 }

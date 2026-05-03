@@ -30,16 +30,17 @@ export default function ExpenseEditModal({ expense, onClose }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content card" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Edit Expense</h2>
-          <button className="modal-close" onClick={onClose}>✕</button>
+          <h2 className="card-title">Edit Expense</h2>
+          <button type="button" className="modal-close btn btn-ghost" onClick={onClose}>Close</button>
         </div>
 
-        <form onSubmit={handleSubmit} className="edit-form">
-          <div className="form-group">
-            <label htmlFor="edit-title">Description</label>
+        <form onSubmit={handleSubmit} className="edit-form form-grid">
+          <div className="field field-span-2">
+            <label className="field-label" htmlFor="edit-title">Description</label>
             <input
+              className="input"
               id="edit-title"
               type="text"
               name="title"
@@ -49,9 +50,10 @@ export default function ExpenseEditModal({ expense, onClose }) {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="edit-amount">Amount ($)</label>
+          <div className="field">
+            <label className="field-label" htmlFor="edit-amount">Amount</label>
             <input
+              className="input"
               id="edit-amount"
               type="number"
               name="amount"
@@ -63,27 +65,29 @@ export default function ExpenseEditModal({ expense, onClose }) {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="edit-category">Category</label>
+          <div className="field">
+            <label className="field-label" htmlFor="edit-category">Category</label>
             <select
+              className="input"
               id="edit-category"
               name="category"
               value={formData.category}
               onChange={handleChange}
             >
-              <option value="food">🍔 Food</option>
-              <option value="transport">🚗 Transport</option>
-              <option value="entertainment">🎬 Entertainment</option>
-              <option value="utilities">💡 Utilities</option>
-              <option value="shopping">🛍️ Shopping</option>
-              <option value="health">🏥 Health</option>
-              <option value="other">📌 Other</option>
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="utilities">Utilities</option>
+              <option value="shopping">Shopping</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="edit-date">Date</label>
+          <div className="field field-span-2">
+            <label className="field-label" htmlFor="edit-date">Date</label>
             <input
+              className="input"
               id="edit-date"
               type="date"
               name="date"
@@ -93,9 +97,9 @@ export default function ExpenseEditModal({ expense, onClose }) {
             />
           </div>
 
-          <div className="modal-actions">
-            <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn-save">Save Changes</button>
+          <div className="modal-actions form-actions">
+            <button type="button" className="btn btn-ghost" onClick={onClose}>Cancel</button>
+            <button type="submit" className="btn btn-primary">Save Changes</button>
           </div>
         </form>
       </div>

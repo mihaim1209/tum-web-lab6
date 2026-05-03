@@ -47,7 +47,7 @@ export default function ExpenseForm() {
       <h2 className="card-title">Add Expense</h2>
       
       <div className="form-grid">
-        <div className="field">
+        <div className="field field-span-2">
           <label className="field-label" htmlFor="title">Description</label>
           <input
             id="title"
@@ -56,7 +56,7 @@ export default function ExpenseForm() {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            placeholder="e.g., Lunch at restaurant"
+            placeholder="Lunch, rent, bus ticket..."
             required
           />
         </div>
@@ -96,7 +96,7 @@ export default function ExpenseForm() {
           </select>
         </div>
 
-        <div className="field">
+        <div className="field field-span-2">
           <label className="field-label" htmlFor="date">Date</label>
           <input
             id="date"

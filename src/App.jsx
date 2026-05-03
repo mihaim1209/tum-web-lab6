@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import ExpenseList from './components/ExpenseList';
 import ExpenseForm from './components/ExpenseForm';
+import FilterBar from './components/FilterBar';
 import ThemeToggle from './components/ThemeToggle';
 import StatisticsPanel from './components/StatisticsPanel';
 import { ThemeProvider } from './context/ThemeContext';
@@ -26,7 +26,7 @@ function App() {
             <StatisticsPanel />
             <div className="two-col">
               <ExpenseForm />
-              <div></div>
+              <FilterBar />
             </div>
             <ExpenseList />
           </main>
