@@ -18,17 +18,23 @@ export const ExpenseProvider = ({ children }) => {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    api.listExpenses()
-      .then(res => {
+    (async () => {
+      try {
+        // Ensure we have a token for demo purposes
+        if (!localStorage.getItem('demo_token')) {
+          await api.getToken(['READ','WRITE','DELETE']);
+        }
+        const res = await api.listExpenses();
         if (!mounted) return;
         setExpenses(res.items || []);
-        setLoading(false);
-      })
-      .catch(err => {
+      } catch (err) {
         if (!mounted) return;
         setError(err.message || 'Failed to load');
+      } finally {
+        if (!mounted) return;
         setLoading(false);
-      });
+      }
+    })();
     return () => { mounted = false; };
   }, []);
 

@@ -2,6 +2,7 @@ import ExpenseList from './components/ExpenseList';
 import ExpenseForm from './components/ExpenseForm';
 import FilterBar from './components/FilterBar';
 import ThemeToggle from './components/ThemeToggle';
+import TokenManager from './components/TokenManager';
 import StatisticsPanel from './components/StatisticsPanel';
 import { ThemeProvider } from './context/ThemeContext';
 import { ExpenseProvider } from './context/ExpenseContext';
@@ -20,7 +21,10 @@ function App() {
                 All data is stored locally in your browser.
               </p>
             </div>
-            <ThemeToggle />
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <TokenManager />
+              <ThemeToggle />
+            </div>
           </header>
           <main className="app-main">
             <StatisticsPanel />
