@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Expense Tracker API",
+    "version": "1.0.0",
+    "description": "Simple REST API used for Lab 7 demo. JWT protected with short expiry."
+  },
+  "paths": {
+    "/token": {
+      "post": {
+        "summary": "Issue a demo JWT",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "permissions": { "type": "array", "items": { "type": "string" } },
+                  "role": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "JWT issued" }
+        }
+      },
+      "get": {
+        "summary": "Issue a demo JWT (GET)",
+        "parameters": [
+          { "name": "permissions", "in": "query", "schema": { "type": "string" } },
+          { "name": "role", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "JWT issued" } }
+      }
+    },
+    "/expenses": {
+      "get": {
+        "summary": "List expenses",
+        "parameters": [
+          { "name": "skip", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "q", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "List of expenses" } }
+      },
+      "post": { "summary": "Create expense", "responses": { "201": { "description": "Created" } } }
+    },
+    "/expenses/{id}": {
+      "get": { "summary": "Get expense" },
+      "put": { "summary": "Update expense" },
+      "delete": { "summary": "Delete expense" }
+    }
+  }
+}
