@@ -1,12 +1,12 @@
 import { createContext, useEffect, useMemo, useState, useContext } from 'react';
+import api from '../lib/api';
 
 const ExpenseContext = createContext();
 
 export const ExpenseProvider = ({ children }) => {
-  const [expenses, setExpenses] = useState(() => {
-    const saved = localStorage.getItem('expenses');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [favoritesOnly, setFavoritesOnly] = useState(false);
@@ -16,32 +16,42 @@ export const ExpenseProvider = ({ children }) => {
   const [customEndDate, setCustomEndDate] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('expenses', JSON.stringify(expenses));
-  }, [expenses]);
+    let mounted = true;
+    setLoading(true);
+    api.listExpenses()
+      .then(res => {
+        if (!mounted) return;
+        setExpenses(res.items || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        if (!mounted) return;
+        setError(err.message || 'Failed to load');
+        setLoading(false);
+      });
+    return () => { mounted = false; };
+  }, []);
 
-  const addExpense = (expense) => {
-    const newExpense = {
-      ...expense,
-      id: Date.now(),
-      liked: false,
-    };
-    setExpenses([newExpense, ...expenses]);
+  const addExpense = async (expense) => {
+    const created = await api.createExpense(expense);
+    setExpenses(prev => [created, ...prev]);
   };
 
-  const removeExpense = (id) => {
-    setExpenses(expenses.filter(e => e.id !== id));
+  const removeExpense = async (id) => {
+    await api.deleteExpense(id);
+    setExpenses(prev => prev.filter(e => e.id !== id));
   };
 
-  const updateExpense = (id, updatedData) => {
-    setExpenses(expenses.map(e =>
-      e.id === id ? { ...e, ...updatedData } : e
-    ));
+  const updateExpense = async (id, updatedData) => {
+    const updated = await api.updateExpense(id, updatedData);
+    setExpenses(prev => prev.map(e => e.id === id ? updated : e));
   };
 
-  const toggleLike = (id) => {
-    setExpenses(expenses.map(e =>
-      e.id === id ? { ...e, liked: !e.liked } : e
-    ));
+  const toggleLike = async (id) => {
+    const e = expenses.find(x => x.id === id);
+    if (!e) return;
+    const updated = await api.updateExpense(id, { liked: !e.liked });
+    setExpenses(prev => prev.map(x => x.id === id ? updated : x));
   };
 
   const filteredExpenses = useMemo(() => {
@@ -151,6 +161,8 @@ export const ExpenseProvider = ({ children }) => {
         removeExpense,
         updateExpense,
         toggleLike,
+        loading,
+        error,
       }}
     >
       {children}
